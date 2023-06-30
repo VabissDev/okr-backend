@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create table users
+      author: leylakhalilli
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: fullName
+                  type: varchar
+              - column:
+                  name: email
+                  type: varchar
+              - column:
+                  name: password
+                  type: varchar
