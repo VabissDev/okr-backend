@@ -19,4 +19,7 @@ public class Permission {
 
     private String permissionName;
 
+//    @OneToMany(mappedBy = "permissions")
+//    private User user;
+
 }
