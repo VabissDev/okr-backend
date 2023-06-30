@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      comment: initial database structure setup
+      id: creating table
+      author: Nurlana Mammadova
+      changes:
+        - createTable:
+            tableName: organizations
+            columns:
+              - column:
+                  name: organization_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar (20)
