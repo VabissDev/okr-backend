@@ -2,8 +2,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/create-permission-table.xml
   - include:
+      file: db/changelog/insert-permissions.xml
+  - include:
       file: db/changelog/create-users-table.yml
-
-
-
-
