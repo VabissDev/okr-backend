@@ -39,6 +39,10 @@ public class Users {
 //    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
 //    private List<Permission> permissionList;
 
+    @ManyToOne
+    @JoinColumn(name = "permission_id", referencedColumnName = "user_id")
+    private Permission permission;
+
 
 
 }

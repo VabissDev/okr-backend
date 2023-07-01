@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class Permission {
 
     private String permissionName;
 
-//    @OneToMany(mappedBy = "permissions")
-//    private User user;
+    @OneToMany(mappedBy = "permission")
+    private List<Users> users;
 
 }
