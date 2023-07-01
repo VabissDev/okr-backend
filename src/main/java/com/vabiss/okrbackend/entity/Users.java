@@ -37,7 +37,7 @@ public class Users {
 //
 
     @ManyToOne
-    @JoinColumn(name = "permission_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "permission_id", referencedColumnName = "permission_id")
     private Permission permission;
 
 
