@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -20,4 +22,23 @@ public class Users {
     private String fullName;
     private String email;
     private String password;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "WorkspaceUser",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "workspace_id")
+//    )
+//    private List<Workspaces> workspaces;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "organization_id", referencedColumnName = "id")
+//    private Organizations organizations;
+//
+//
+//    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+//    private List<Permission> permissionList;
+
+
+
 }
