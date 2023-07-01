@@ -35,9 +35,6 @@ public class Users {
 //    @JoinColumn(name = "organization_id", referencedColumnName = "id")
 //    private Organizations organizations;
 //
-//
-//    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-//    private List<Permission> permissionList;
 
     @ManyToOne
     @JoinColumn(name = "permission_id", referencedColumnName = "user_id")
