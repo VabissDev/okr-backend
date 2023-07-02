@@ -36,7 +36,7 @@ public class Users {
 //    private Organizations organizations;
 //
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_user",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),

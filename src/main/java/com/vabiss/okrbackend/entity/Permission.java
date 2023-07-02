@@ -21,7 +21,9 @@ public class Permission {
 
     private String permissionName;
 
-    @OneToMany(mappedBy = "permission")
-    private List<Users> users;
+    private String permissionDescription;
+
+    @ManyToMany(mappedBy = "permissions")
+    private List<Role> roles;
 
 }
