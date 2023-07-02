@@ -24,7 +24,7 @@ public class Role {
     private String roleDescription;
 
     @ManyToMany(mappedBy = "roles")
-    private List<Users> users;
+    private List<User> users;
 
     @ManyToMany
     @JoinTable(
