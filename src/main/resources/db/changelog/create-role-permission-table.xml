@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create role permission" author="admin">
+        <createTable tableName="role_permission">
+            <column name="role_id" type="INTEGER" />
+            <column name="permission_id" type="INTEGER" />
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="role_permission" baseColumnNames="role_id"
+                                 constraintName="fk_role_permission"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="role_id" />
+
+        <addForeignKeyConstraint baseTableName="role_permission" baseColumnNames="permission_id"
+                                 constraintName="fk_permission_role"
+                                 referencedTableName="permissions"
+                                 referencedColumnNames="permission_id" />
+        </changeSet>
+
+</databaseChangeLog>
