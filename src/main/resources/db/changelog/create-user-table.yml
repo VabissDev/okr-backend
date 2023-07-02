@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create table user
+      id: create table users
       author: leylakhalilli
       changes:
         - createTable:
-            tableName: user
+            tableName: users
             columns:
               - column:
                   name: user_id
@@ -14,7 +14,7 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: full_name
+                  name: user_full_name
                   type: varchar
               - column:
                   name: email
