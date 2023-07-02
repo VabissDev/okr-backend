@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 public class User {
     @Id
@@ -19,6 +19,7 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
+    @Column(name = "user_full_name")
     private String fullName;
     private String email;
     private String password;
