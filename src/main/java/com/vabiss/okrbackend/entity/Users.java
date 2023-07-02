@@ -36,10 +36,12 @@ public class Users {
 //    private Organizations organizations;
 //
 
-    @ManyToOne
-    @JoinColumn(name = "permission_id", referencedColumnName = "permission_id")
-    private Permission permission;
-
-
+    @ManyToMany
+    @JoinTable(
+            name = "role_user",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    )
+    private List<Role> roles;
 
 }
