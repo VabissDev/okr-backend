@@ -11,3 +11,5 @@ databaseChangeLog:
       file: db/changelog/create-user-table.yml
   - include:
       file: db/changelog/create-role-user-table.xml
+  - include:
+      file: db/changelog/create-organization-table.yml

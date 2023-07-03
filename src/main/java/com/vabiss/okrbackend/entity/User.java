@@ -32,10 +32,10 @@ public class User {
 //    )
 //    private List<Workspaces> workspaces;
 //
-//    @ManyToOne
-//    @JoinColumn(name = "organization_id", referencedColumnName = "id")
-//    private Organizations organizations;
-//
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private Organization organizations;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
