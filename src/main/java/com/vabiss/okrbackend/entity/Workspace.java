@@ -17,7 +17,7 @@ public class Workspace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
-    int id;
+    Integer id;
 
     @Column(name = "name", nullable = false)
     String name;
