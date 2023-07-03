@@ -6,10 +6,10 @@
 
     <changeSet id="create workspace table" author="Cavidan Niyazali">
         <createTable tableName="workspaces">
-            <column name="workspace_id" type="integer" autoIncrement="true">
+            <column name="id" type="integer" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="workspace_name" type="varchar(20)">
+            <column name="name" type="varchar(20)">
                 <constraints nullable="false"/>
             </column>
             <column name="owner" type="varchar(20)">

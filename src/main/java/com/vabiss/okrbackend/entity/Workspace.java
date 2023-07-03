@@ -16,10 +16,10 @@ import java.util.List;
 public class Workspace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "workspace_id", nullable = false, updatable = false, unique = true)
+    @Column(name = "id", nullable = false, updatable = false, unique = true)
     int workspaceId;
 
-    @Column(name = "workspace_name", nullable = false)
+    @Column(name = "name", nullable = false)
     String workspaceName;
 
     @Column(name = "owner", nullable = false)

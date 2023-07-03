@@ -16,7 +16,7 @@
 
         <addForeignKeyConstraint constraintName="fk_workspaces"
                                  baseTableName="workspace_user" baseColumnNames="workspace_id"
-                                 referencedTableName="workspaces" referencedColumnNames="workspace_id" />
+                                 referencedTableName="workspaces" referencedColumnNames="id" />
     </changeSet>
 
 </databaseChangeLog>
