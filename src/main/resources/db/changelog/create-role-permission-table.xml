@@ -18,7 +18,7 @@
         <addForeignKeyConstraint baseTableName="role_permission" baseColumnNames="permission_id"
                                  constraintName="fk_permission_role"
                                  referencedTableName="permissions"
-                                 referencedColumnNames="permission_id" />
+                                 referencedColumnNames="id" />
         </changeSet>
 
 </databaseChangeLog>
