@@ -12,7 +12,7 @@
 
         <addForeignKeyConstraint constraintName="fk_users"
                                  baseTableName="workspace_user" baseColumnNames="user_id"
-                                 referencedTableName="users" referencedColumnNames="user_id" />
+                                 referencedTableName="users" referencedColumnNames="id" />
 
         <addForeignKeyConstraint constraintName="fk_workspaces"
                                  baseTableName="workspace_user" baseColumnNames="workspace_id"

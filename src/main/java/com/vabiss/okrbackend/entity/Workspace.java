@@ -17,10 +17,10 @@ public class Workspace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
-    int workspaceId;
+    int id;
 
     @Column(name = "name", nullable = false)
-    String workspaceName;
+    String name;
 
     @Column(name = "owner", nullable = false)
     String owner;
@@ -34,7 +34,7 @@ public class Workspace {
     @Column(name = "status", nullable = false)
     String status;
 
-    @ManyToMany(mappedBy = "workspaces", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "workspaces", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     List<User> users;
 
     @ManyToOne
