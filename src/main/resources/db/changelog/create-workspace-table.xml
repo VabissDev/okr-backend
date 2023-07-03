@@ -32,7 +32,7 @@
         <addForeignKeyConstraint constraintName="fk_workspaces_organizations"
                                  baseTableName="workspaces" baseColumnNames="organization_id"
                                  referencedTableName="organizations" referencedColumnNames="organization_id"
-                                 onDelete="CASCADE" onUpdate="RESTRICT"/>
+                                 onUpdate="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>
