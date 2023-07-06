@@ -16,7 +16,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private int id;
 
     @Column(name = "user_full_name")
@@ -24,14 +24,14 @@ public class User {
     private String email;
     private String password;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "WorkspaceUser",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "workspace_id")
-//    )
-//    private List<Workspaces> workspaces;
-//
+    @ManyToMany
+    @JoinTable(
+            name = "WorkspaceUser",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "workspace_id")
+    )
+    private List<Workspace> workspaces;
+
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organizations;
@@ -40,7 +40,7 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_user",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
