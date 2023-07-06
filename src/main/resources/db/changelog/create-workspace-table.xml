@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create workspace table" author="Cavidan Niyazali">
+        <createTable tableName="workspaces">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organization_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_workspaces_organizations"
+                                 baseTableName="workspaces" baseColumnNames="organization_id"
+                                 referencedTableName="organizations" referencedColumnNames="organization_id"
+                                 onUpdate="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>
