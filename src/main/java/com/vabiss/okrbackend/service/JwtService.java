@@ -20,7 +20,7 @@ public class JwtService {
     @Value("${security.jwt.secret}")
     private String SECRET_KEY;
 
-    public String findUsername(String token) {
+    public String extractUsername(String token) {
         return exportToken(token, Claims::getSubject);
     }
 
@@ -38,7 +38,7 @@ public class JwtService {
     }
 
     public boolean tokenControl(String jwt, UserDetails userDetails) {
-        final String username = findUsername(jwt);
+        final String username = extractUsername(jwt);
         return (username.equals(userDetails.getUsername()) && !exportToken(jwt, Claims::getExpiration).before(new Date()));
     }
 
@@ -47,7 +47,7 @@ public class JwtService {
                 .setClaims(new HashMap<>())
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 20 * 24 * 60 * 60 * 1000))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
