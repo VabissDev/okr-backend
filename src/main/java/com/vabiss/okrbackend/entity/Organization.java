@@ -16,6 +16,6 @@ public class Organization {
     private Integer organizationId;
     private String name;
 
-    @OneToMany(mappedBy = "organizations")
+    @OneToMany(mappedBy = "organization")
     private List<User> users;
 }
