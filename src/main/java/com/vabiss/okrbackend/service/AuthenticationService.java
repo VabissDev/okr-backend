@@ -1,8 +1,8 @@
 package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.UserDto;
-import com.vabiss.okrbackend.dto.UserRequest;
-import com.vabiss.okrbackend.dto.UserResponse;
+import com.vabiss.okrbackend.dto.AuthenticationRequest;
+import com.vabiss.okrbackend.dto.AuthenticationResponse;
 import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.repository.RoleRepository;
@@ -25,7 +25,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponse save(UserDto userDto) {
+    public AuthenticationResponse save(UserDto userDto) {
         Role role = roleRepository.findRoleByRoleName("USER");
         if (role == null) {
             role = new Role("USER");
@@ -40,14 +40,14 @@ public class AuthenticationService {
         userRepository.save(user);
 
         var token = jwtService.generateToken(user);
-        return UserResponse.builder().token(token).build();
+        return AuthenticationResponse.builder().token(token).build();
     }
 
-    public UserResponse auth(UserRequest userRequest) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getEmail(), userRequest.getPassword()));
-        User user = userRepository.findByEmail(userRequest.getEmail()).orElseThrow();
+    public AuthenticationResponse auth(AuthenticationRequest authenticationRequest) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+        User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
         String token = jwtService.generateToken(user);
-        return UserResponse.builder().token(token).build();
+        return AuthenticationResponse.builder().token(token).build();
     }
 
 }
