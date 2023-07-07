@@ -1,5 +1,6 @@
 package com.vabiss.okrbackend.config;
 
+import enums.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,15 +22,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf().disable()
-                .authorizeHttpRequests()
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login/**").permitAll()
-                .requestMatchers("/dashboard/**").hasRole(String.valueOf(Role.USER))
+                .requestMatchers("/dashboard/**").hasRole(String.valueOf(RoleEnum.USER))
                 .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                 )
+                .sessionManagement(sess -> sess
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
