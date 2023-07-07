@@ -11,9 +11,9 @@ public class DemoController {
         return "Hello World";
     }
 
-
     @GetMapping("/demo2")
     public String demo() {
         return "bla bla";
     }
+
 }
