@@ -16,6 +16,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     private int id;
 
     private String roleName;
@@ -28,8 +29,8 @@ public class Role {
     @ManyToMany
     @JoinTable(
             name = "role_permission",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "permission_id")
     )
     private List<Permission> permissions;
 
