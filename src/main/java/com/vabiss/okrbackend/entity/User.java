@@ -1,12 +1,16 @@
 package com.vabiss.okrbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +49,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "role_user",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -88,5 +92,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return isEnabled;
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.vabiss.okrbackend.service.impl;
 
+import com.vabiss.okrbackend.dto.RoleDto;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -44,20 +46,24 @@ public class UserServiceImpl implements UserService {
     public User registerUser(RegistrationRequest request) {
 
         Optional<User> user = this.findByEmail(request.getEmail());
+
+
+
         if (user.isPresent()) {
             throw new UserAlreadyExistsException(
                     "User with email " + request.getEmail() + " already exists");
         }
         Role role = roleRepository.findRoleByRoleName("MEMBER");
-
         User newUser = new User();
         newUser.setFullName(request.getFullName());
         newUser.setEmail(request.getEmail());
         newUser.setRoles(List.of(role));
 
 //        newUser.setPassword(passwordEncoder.encode(request.password()));
+        System.out.println("hi");
 
         return userRepository.save(newUser);
+
     }
 
     @Override
