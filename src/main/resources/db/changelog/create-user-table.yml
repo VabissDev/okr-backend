@@ -22,3 +22,7 @@ databaseChangeLog:
               - column:
                   name: password
                   type: varchar
+              - column:
+                  name: enabled
+                  type: boolean
+                  defaultValueBoolean: false

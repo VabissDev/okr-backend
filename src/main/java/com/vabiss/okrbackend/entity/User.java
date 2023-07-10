@@ -33,6 +33,9 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean enabled;
+
     @ManyToMany
     @JoinTable(
             name = "workspace_user",
@@ -82,7 +85,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
 }
