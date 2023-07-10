@@ -17,4 +17,6 @@ databaseChangeLog:
       file: db/changelog/create-workspace-table.xml
   - include:
       file: db/changelog/create-workspace-user-table.xml
+  - include:
+      file: db/changelog/create-verification-token-table.xml
 

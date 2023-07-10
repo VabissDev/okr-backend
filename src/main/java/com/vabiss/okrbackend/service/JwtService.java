@@ -39,7 +39,7 @@ public class JwtService {
 
     public boolean tokenControl(String jwt, UserDetails userDetails) {
         final String username = extractUsername(jwt);
-        return (username.equals(userDetails.getUsername()) && !exportToken(jwt, Claims::getExpiration).before(new Date()));
+        return (username.equals(userDetails.getUsername()) && !exportToken(jwt, Claims::getExpiration).before(new Date()) && userDetails.isEnabled());
     }
 
     public String generateToken(UserDetails user) {
