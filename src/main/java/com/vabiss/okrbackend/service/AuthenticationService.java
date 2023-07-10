@@ -52,7 +52,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(token).build();
     }
 
-    public AuthenticationResponse auth(AuthenticationRequest authenticationRequest) {
+    public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
         String token = jwtService.generateToken(user);
