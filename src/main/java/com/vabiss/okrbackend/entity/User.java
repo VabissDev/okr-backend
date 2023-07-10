@@ -56,6 +56,9 @@ public class User implements UserDetails {
     )
     private List<Role> roles;
 
+    @OneToOne(mappedBy = "user")
+    private VerificationToken verificationToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles

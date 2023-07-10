@@ -36,7 +36,7 @@ public class VerificationToken {
     public VerificationToken(User user) {
         this.user = user;
         createdDate = new Date();
-        expiredDate = new Date(createdDate.getTime() + (2 * 60 * 1000));
+        expiredDate = new Date(createdDate.getTime() + (24 * 60 * 60 * 1000));
         token = UUID.randomUUID().toString();
     }
 
