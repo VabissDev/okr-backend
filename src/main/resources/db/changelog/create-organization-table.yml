@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: organizations
             columns:
               - column:
-                  name: organization_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
