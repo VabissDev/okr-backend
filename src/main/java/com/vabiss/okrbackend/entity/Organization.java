@@ -12,10 +12,16 @@ import java.util.List;
 public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "organization_id")
-    private Integer organizationId;
+    @Column(name = "id")
+    private int id;
     private String name;
+    @Column(name = "email")
+    private String email;
 
     @OneToMany(mappedBy = "organization")
     private List<User> users;
+
+    @OneToMany(mappedBy = "organization")
+    private List<Workspace> workspaces;
+
 }

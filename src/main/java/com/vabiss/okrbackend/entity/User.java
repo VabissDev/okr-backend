@@ -2,15 +2,13 @@ package com.vabiss.okrbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +16,7 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -28,6 +27,7 @@ public class User implements UserDetails {
 
     @Column(name = "user_full_name")
     private String fullName;
+    @Column(name = "email")
     private String email;
 
     @JsonIgnore
@@ -52,6 +52,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+    @Column(name = "is_enabled")
+    private boolean isEnabled = false;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -70,6 +73,7 @@ public class User implements UserDetails {
         return true;
     }
 
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
@@ -82,7 +86,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
 }

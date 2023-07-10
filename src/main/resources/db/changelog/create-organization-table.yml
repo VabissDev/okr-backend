@@ -7,7 +7,7 @@ databaseChangeLog:
             tableName: organizations
             columns:
               - column:
-                  name: organization_id
+                  name: id
                   type: int
                   autoIncrement: true
                   constraints:
@@ -15,3 +15,8 @@ databaseChangeLog:
               - column:
                   name: name
                   type: varchar (20)
+              - column:
+                  name: email
+                  type: varchar (20)
+
+
