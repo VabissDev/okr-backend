@@ -42,7 +42,8 @@ public class AuthenticationService {
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .fullName(userDto.getFullName())
-                .roles(List.of(role)).build();
+                .roles(List.of(role))
+                .enabled(false).build();
         userRepository.save(user);
 
         MimeMessage mimeMessage = emailService.createEmail(user);

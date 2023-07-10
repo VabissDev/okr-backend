@@ -26,3 +26,6 @@ databaseChangeLog:
                   name: enabled
                   type: boolean
                   defaultValueBoolean: false
+              - column:
+                  name: organization_id
+                  type: integer

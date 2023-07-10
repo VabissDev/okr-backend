@@ -35,7 +35,7 @@ public class EmailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
         String htmlMsg = "<h3>To confirm your account, please click here : </h3>" +
-                "http://localhost:8080/login/confirm-account?token=" + verificationToken.getToken();
+                "http://localhost:8080/email-confirm?token=" + verificationToken.getToken();
         try {
             helper.setText(htmlMsg, true);
             helper.setTo(user.getUsername());
@@ -70,7 +70,8 @@ public class EmailService {
         VerificationToken verificationToken = user.getVerificationToken();
         verificationTokenRepository.delete(verificationToken);
 
-        createEmail(user);
+        MimeMessage mimeMessage = createEmail(user);
+        sendEmail(mimeMessage);
         return "Token resend!";
     }
 

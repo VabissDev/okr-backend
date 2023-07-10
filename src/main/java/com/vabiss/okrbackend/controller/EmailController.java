@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/")
 public class EmailController {
 
     private final EmailService emailService;
