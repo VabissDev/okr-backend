@@ -51,6 +51,8 @@ public class User implements UserDetails {
     @Column(columnDefinition = "boolean default false")
     private boolean isOrganization;
 
+    private String imageUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_user",

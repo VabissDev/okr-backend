@@ -33,6 +33,9 @@ databaseChangeLog:
                   name: is_organization
                   type: boolean
                   defaultValueBoolean: false
+              - column:
+                  name: image_url
+                  type: text
 
         - addForeignKeyConstraint:
             baseTableName: "users"
