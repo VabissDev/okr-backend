@@ -33,6 +33,9 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean enabled;
+
     @ManyToMany
     @JoinTable(
             name = "workspace_user",
@@ -52,6 +55,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
+
+    @OneToOne(mappedBy = "user")
+    private VerificationToken verificationToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -82,7 +88,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
 }

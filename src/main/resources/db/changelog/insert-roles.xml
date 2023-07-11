@@ -17,6 +17,9 @@
         <insert tableName="roles">
             <column name="role_name" value="VIEWER" />
         </insert>
+        <insert tableName="roles">
+            <column name="role_name" value="USER" />
+        </insert>
     </changeSet>
 
 </databaseChangeLog>
