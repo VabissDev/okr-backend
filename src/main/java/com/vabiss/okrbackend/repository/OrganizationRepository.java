@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization, Integer> {
-    Organization findByOrganizationId(int id);
-    List<Organization> findAll();
+
 
 }

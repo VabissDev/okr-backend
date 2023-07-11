@@ -2,6 +2,7 @@ package com.vabiss.okrbackend.controller;
 
 import com.vabiss.okrbackend.dto.AuthenticationRequest;
 import com.vabiss.okrbackend.dto.AuthenticationResponse;
+import com.vabiss.okrbackend.dto.OrganizationDto;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class AuthenticationController {
     @PostMapping("/save")
     public ResponseEntity<AuthenticationResponse> save(@RequestBody UserDto userDto) {
         return ResponseEntity.ok(authenticationService.save(userDto));
+    }
+
+    @PostMapping("/save/organization")
+    public ResponseEntity<AuthenticationResponse> saveOrganization(@RequestBody OrganizationDto organizationDto) {
+        return ResponseEntity.ok(authenticationService.saveOrganization(organizationDto));
     }
 
     @PostMapping("/login")

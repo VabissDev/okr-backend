@@ -48,6 +48,11 @@ public class User implements UserDetails {
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean isOrganization;
+
+    private String imageUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_user",
