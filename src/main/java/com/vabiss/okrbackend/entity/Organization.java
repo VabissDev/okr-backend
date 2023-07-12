@@ -20,6 +20,8 @@ public class Organization {
 
     private String name;
 
+    private String avatar;
+
     @OneToMany(mappedBy = "organization")
     private List<User> users;
 
