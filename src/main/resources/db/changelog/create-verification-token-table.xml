@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create verification token table" author="vusalaxndzde">
+        <createTable tableName="verification_token">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="token" type="VARCHAR(100)" />
+            <column name="created_date" type="DATETIME" />
+            <column name="expired_date" type="DATETIME" />
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

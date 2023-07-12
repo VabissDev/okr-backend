@@ -1,18 +1,16 @@
 package com.vabiss.okrbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.context.annotation.Bean;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -31,11 +28,13 @@ public class User implements UserDetails {
 
     @Column(name = "user_full_name")
     private String fullName;
-    @Column(name = "email")
     private String email;
 
     @JsonIgnore
     private String password;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean enabled;
 
     @ManyToMany
     @JoinTable(
@@ -49,16 +48,16 @@ public class User implements UserDetails {
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_user",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
-    @Column(name = "is_enabled")
-    private boolean isEnabled = false;
 
+    @OneToOne(mappedBy = "user")
+    private VerificationToken verificationToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -77,7 +76,6 @@ public class User implements UserDetails {
         return true;
     }
 
-
     @Override
     public boolean isAccountNonLocked() {
         return true;
@@ -90,8 +88,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
-
 
 }

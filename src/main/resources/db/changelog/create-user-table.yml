@@ -23,14 +23,9 @@ databaseChangeLog:
                   name: password
                   type: varchar
               - column:
-                  name: is_enabled
+                  name: enabled
                   type: boolean
+                  defaultValueBoolean: false
               - column:
                   name: organization_id
-                  type: INT
-            foreignKeys:
-              - foreignKey:
-                  baseColumnNames: organization_id
-                  baseTableName: users
-                  referencedColumnNames: id
-                  referencedTableName: organizations
+                  type: integer
