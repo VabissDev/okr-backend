@@ -36,6 +36,7 @@ public class EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
         String htmlMsg = "<h3>To confirm your account, please click here : </h3>" +
                 "https://okr-backend-vabiss-c66783e088f5.herokuapp.com/email-confirm?token=" + verificationToken.getToken();
+        // http://localhost:8080
         try {
             helper.setText(htmlMsg, true);
             helper.setTo(user.getUsername());
