@@ -18,8 +18,10 @@ public class Permission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "name")
     private String permissionName;
 
+    @Column(name = "description")
     private String permissionDescription;
 
     @ManyToMany(mappedBy = "permissions")
