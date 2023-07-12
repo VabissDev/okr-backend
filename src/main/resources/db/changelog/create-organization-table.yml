@@ -15,3 +15,6 @@ databaseChangeLog:
               - column:
                   name: name
                   type: varchar (20)
+              - column:
+                  name: avatar
+                  type: varchar
