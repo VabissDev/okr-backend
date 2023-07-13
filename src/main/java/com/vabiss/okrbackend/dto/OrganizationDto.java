@@ -6,11 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class OrganizationDto {
-    private String name;
+
+    private String organizationName;
+
     private String email;
+
     private String password;
+
 }

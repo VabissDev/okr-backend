@@ -29,3 +29,17 @@ databaseChangeLog:
               - column:
                   name: organization_id
                   type: integer
+              - column:
+                  name: is_organization
+                  type: boolean
+                  defaultValueBoolean: false
+              - column:
+                  name: image_url
+                  type: text
+
+        - addForeignKeyConstraint:
+            baseTableName: "users"
+            baseColumnNames: "organization_id"
+            constraintName: "fk_user_organization"
+            referencedTableName: "organizations"
+            referencedColumnNames: "id"
