@@ -26,8 +26,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_full_name")
+    @Column(name = "full_name")
     private String fullName;
+
+    private String avatar;
+
     private String email;
 
     @JsonIgnore
@@ -50,8 +53,6 @@ public class User implements UserDetails {
 
     @Column(columnDefinition = "boolean default false")
     private boolean isOrganization;
-
-    private String imageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

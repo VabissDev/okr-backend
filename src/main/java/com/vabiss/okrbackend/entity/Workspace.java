@@ -38,6 +38,6 @@ public class Workspace {
     List<User> users;
 
     @ManyToOne
-    @JoinColumn(name = "organization_id")
+    @JoinColumn(name = "org_id")
     Organization organization;
 }

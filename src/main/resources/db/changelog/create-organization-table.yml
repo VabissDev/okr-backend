@@ -16,7 +16,5 @@ databaseChangeLog:
                   name: name
                   type: varchar (20)
               - column:
-                  name: email
-                  type: varchar (20)
-
-
+                  name: avatar
+                  type: varchar

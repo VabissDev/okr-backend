@@ -2,10 +2,7 @@
 
 package com.vabiss.okrbackend.service;
 
-import com.vabiss.okrbackend.dto.OrganizationDto;
-import com.vabiss.okrbackend.dto.UserDto;
-import com.vabiss.okrbackend.dto.AuthenticationRequest;
-import com.vabiss.okrbackend.dto.AuthenticationResponse;
+import com.vabiss.okrbackend.dto.*;
 import com.vabiss.okrbackend.entity.Organization;
 import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
@@ -36,35 +33,12 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public AuthenticationResponse save(UserDto userDto) {
-        if (userRepository.existsByEmail(userDto.getEmail())) {
+    public AuthenticationResponse save(RegistrationDto registrationDto) {
+        if (userRepository.existsByEmail(registrationDto.getEmail())) {
             throw new RuntimeException("Error: Email is already in use!");
         }
 
-        Role role = new Role("USER");
-        List<Role> roles = checkRolesExist(List.of(role));
-
-        User user = User.builder()
-                .email(userDto.getEmail())
-                .password(passwordEncoder.encode(userDto.getPassword()))
-                .fullName(userDto.getFullName())
-                .roles(roles)
-                .enabled(false).build();
-        userRepository.save(user);
-
-        MimeMessage mimeMessage = emailService.createEmail(user);
-        emailService.sendEmail(mimeMessage);
-
-        var token = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(token).build();
-    }
-
-    public AuthenticationResponse saveOrganization(OrganizationDto organizationDto) {
-        if (userRepository.existsByEmail(organizationDto.getEmail())) {
-            throw new RuntimeException("Error: Email is already in use!");
-        }
-
-        Organization organization = new Organization(organizationDto.getOrganizationName());
+        Organization organization = new Organization(registrationDto.getOrganizationName());
         organizationRepository.save(organization);
 
         Role role1 = new Role("USER");
@@ -75,9 +49,9 @@ public class AuthenticationService {
         List<Role> roles = checkRolesExist(List.of(role1, role2, role3, role4, role5));
 
         User user = User.builder()
-                .email(organizationDto.getEmail())
-                .password(passwordEncoder.encode(organizationDto.getPassword()))
-                .fullName(organizationDto.getOrganizationName())
+                .email(registrationDto.getEmail())
+                .password(passwordEncoder.encode(registrationDto.getPassword()))
+                .fullName(registrationDto.getFullName())
                 .roles(roles)
                 .organization(organization)
                 .isOrganization(true)

@@ -14,7 +14,10 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: user_full_name
+                  name: full_name
+                  type: varchar
+              - column:
+                  name: avatar
                   type: varchar
               - column:
                   name: email
@@ -33,9 +36,6 @@ databaseChangeLog:
                   name: is_organization
                   type: boolean
                   defaultValueBoolean: false
-              - column:
-                  name: image_url
-                  type: text
 
         - addForeignKeyConstraint:
             baseTableName: "users"
