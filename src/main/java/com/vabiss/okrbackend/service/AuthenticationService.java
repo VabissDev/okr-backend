@@ -1,5 +1,3 @@
-
-
 package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.*;
@@ -9,10 +7,9 @@ import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.repository.OrganizationRepository;
 import com.vabiss.okrbackend.repository.RoleRepository;
 import com.vabiss.okrbackend.repository.UserRepository;
-import com.vabiss.okrbackend.service.EmailService;
-import com.vabiss.okrbackend.service.JwtService;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +29,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final ModelMapper modelMapper;
 
     public AuthenticationResponse save(RegistrationDto registrationDto) {
         if (userRepository.existsByEmail(registrationDto.getEmail())) {
@@ -62,14 +60,14 @@ public class AuthenticationService {
         emailService.sendEmail(mimeMessage);
 
         var token = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(token).build();
+        return AuthenticationResponse.builder().token(token).user(convertToUserDto(user)).build();
     }
 
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow();
         String token = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(token).build();
+        return AuthenticationResponse.builder().token(token).user(convertToUserDto(user)).build();
     }
 
     public List<Role> checkRolesExist(List<Role> roles) {
@@ -84,6 +82,10 @@ public class AuthenticationService {
             }
         }
         return checkedRoles;
+    }
+
+    public UserDto convertToUserDto(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 
 }

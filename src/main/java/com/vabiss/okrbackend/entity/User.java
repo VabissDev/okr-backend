@@ -97,4 +97,12 @@ public class User implements UserDetails {
         return enabled;
     }
 
+    public boolean getIsOrganization() {
+        return this.isOrganization;
+    }
+
+    public void setIsOrganization(boolean isOrganization) {
+        this.isOrganization = isOrganization;
+    }
+
 }
