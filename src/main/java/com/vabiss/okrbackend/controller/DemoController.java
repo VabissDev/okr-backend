@@ -13,7 +13,7 @@ public class DemoController {
 
     @GetMapping("/demo2")
     public String demo() {
-        return "bla bla";
+        return "blah blah";
     }
 
 }
