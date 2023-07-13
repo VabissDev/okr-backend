@@ -1,3 +1,5 @@
+
+
 package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.*;
@@ -7,6 +9,8 @@ import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.repository.OrganizationRepository;
 import com.vabiss.okrbackend.repository.RoleRepository;
 import com.vabiss.okrbackend.repository.UserRepository;
+import com.vabiss.okrbackend.service.EmailService;
+import com.vabiss.okrbackend.service.JwtService;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
