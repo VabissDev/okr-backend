@@ -53,11 +53,11 @@ public class AuthenticationService {
                 .roles(roles)
                 .organization(organization)
                 .isOrganization(true)
-                .enabled(false).build();
+                .enabled(true).build();
         userRepository.save(user);
 
-        MimeMessage mimeMessage = emailService.createEmail(user);
-        emailService.sendEmail(mimeMessage);
+//        MimeMessage mimeMessage = emailService.createEmail(user);
+//        emailService.sendEmail(mimeMessage);
 
         var token = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(token).user(convertToUserDto(user)).build();
