@@ -24,12 +24,20 @@ public class UserController {
         return ResponseEntity.ok(SuccessResponseDto.of(userService.updatePassword(resetPasswordDto.getVerificationToken(), resetPasswordDto.getNewPassword())));
     }
 
-    @PutMapping("/{userId}/displayname")
+    @PutMapping("/{userId}/fullname")
     public ResponseEntity<SuccessResponseDto> updateDisplayName(@PathVariable int userId,
-                                                                @RequestBody Map<String, String> displayName) {
-        User user = userService.updateDisplayName(userId, displayName.get("displayName"));
-        UserDto userDto = userService.convertToUserDto(user);
-        return ResponseEntity.ok(SuccessResponseDto.of("Display name updated!", userDto));
+                                                                @RequestBody UserDto userDto) {
+        User user = userService.updateDisplayName(userId, userDto.getFullName());
+        UserDto userDto2 = userService.convertToUserDto(user);
+        return ResponseEntity.ok(SuccessResponseDto.of("Display name updated!", userDto2));
+    }
+
+    @PutMapping("/{userId}/avatar")
+    public ResponseEntity<SuccessResponseDto> updateProfilePhoto(@PathVariable int userId,
+                                                                 @RequestBody UserDto userDto) {
+        User user = userService.updateAvatar(userId, userDto.getAvatar());
+        UserDto userDto2 = userService.convertToUserDto(user);
+        return ResponseEntity.ok(SuccessResponseDto.of("Avatar updated!", userDto2));
     }
 
 }

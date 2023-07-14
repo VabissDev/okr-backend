@@ -47,6 +47,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateAvatar(int userId, String newAvatar) {
+        if (userRepository.findById(userId).isEmpty()) {
+            throw new UserNotFoundException("User not found - " + userId);
+        }
+        User user = userRepository.findById(userId).get();
+        user.setAvatar(newAvatar);
+
+        return userRepository.save(user);
+    }
+
+    @Override
     public UserDto convertToUserDto(User user) {
         return modelMapper.map(user, UserDto.class);
     }

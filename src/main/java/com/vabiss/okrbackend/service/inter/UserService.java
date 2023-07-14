@@ -9,6 +9,8 @@ public interface UserService {
 
     User updateDisplayName(int userId, String newDisplayName);
 
+    User updateAvatar(int userId, String newAvatar);
+
     UserDto convertToUserDto(User user);
 
 }
