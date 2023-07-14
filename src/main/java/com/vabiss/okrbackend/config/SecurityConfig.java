@@ -1,4 +1,3 @@
-
 package com.vabiss.okrbackend.config;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/demo", "/auth/**").permitAll()
-                        .requestMatchers("/demo2").hasRole("USER")
+                        .requestMatchers("/demo2", "/reset-pwd-email", "/reset-password").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess

@@ -56,8 +56,11 @@ public class AuthenticationService {
                 .enabled(true).build();
         userRepository.save(user);
 
-//        MimeMessage mimeMessage = emailService.createEmail(user);
-//        emailService.sendEmail(mimeMessage);
+        MimeMessage mimeMessage = emailService.createEmail(user,
+                "Complete Registration!",
+                "<h3>To confirm your account, please click here : </h3>",
+                "https://okr-backend-vabiss-c66783e088f5.herokuapp.com/email-confirm?token=");
+        emailService.sendEmail(mimeMessage);
 
         var token = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(token).user(convertToUserDto(user)).build();
