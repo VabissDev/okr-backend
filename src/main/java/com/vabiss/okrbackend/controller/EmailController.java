@@ -1,6 +1,6 @@
 package com.vabiss.okrbackend.controller;
 
-import com.vabiss.okrbackend.dto.ResponseDto;
+import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.service.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class EmailController {
     }
 
     @PostMapping("/resend-email")
-    public ResponseEntity<ResponseDto> resendToken(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(ResponseDto.of(emailService.resendToken(userDto.getEmail())));
+    public ResponseEntity<SuccessResponseDto> resendToken(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(SuccessResponseDto.of(emailService.resendToken(userDto.getEmail())));
     }
 
     @PostMapping("/reset-pwd-email")
-    public ResponseEntity<ResponseDto> sendResetPasswordEmail(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(ResponseDto.of(emailService.createResetPasswordEmail(userDto)));
+    public ResponseEntity<SuccessResponseDto> sendResetPasswordEmail(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(SuccessResponseDto.of(emailService.createResetPasswordEmail(userDto)));
     }
 
 }
