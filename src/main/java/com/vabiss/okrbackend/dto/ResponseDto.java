@@ -13,7 +13,7 @@ public class ResponseDto {
 
     private String successMsg;
     private String errorMsg;
-    private String errorCode;
+    private Integer errorCode;
     private Object object;
 
     public static ResponseDto of(String successMsg) {
@@ -29,7 +29,7 @@ public class ResponseDto {
         return responseDto;
     }
 
-    public static ResponseDto of(String errorCode, String errorMsg) {
+    public static ResponseDto of(Integer errorCode, String errorMsg) {
         ResponseDto responseDto = new ResponseDto();
         responseDto.setErrorCode(errorCode);
         responseDto.setErrorMsg(errorMsg);

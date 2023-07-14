@@ -4,6 +4,7 @@ import com.vabiss.okrbackend.dto.*;
 import com.vabiss.okrbackend.entity.Organization;
 import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
+import com.vabiss.okrbackend.exception.CurrentStateResourceException;
 import com.vabiss.okrbackend.repository.OrganizationRepository;
 import com.vabiss.okrbackend.repository.RoleRepository;
 import com.vabiss.okrbackend.repository.UserRepository;
@@ -33,7 +34,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse save(RegistrationDto registrationDto) {
         if (userRepository.existsByEmail(registrationDto.getEmail())) {
-            throw new RuntimeException("Error: Email is already in use!");
+            throw new CurrentStateResourceException("Email is already in use!");
         }
 
         Organization organization = new Organization(registrationDto.getOrganizationName());
