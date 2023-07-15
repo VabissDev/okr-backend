@@ -3,7 +3,7 @@ package com.vabiss.okrbackend.service;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.VerificationToken;
-import com.vabiss.okrbackend.exception.UserNotFoundException;
+import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.UserRepository;
 import com.vabiss.okrbackend.repository.VerificationTokenRepository;
 import com.vabiss.okrbackend.service.inter.UserService;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateDisplayName(int userId, String newDisplayName) {
         if (userRepository.findById(userId).isEmpty()) {
-            throw new UserNotFoundException("User not found - " + userId);
+            throw new ResourceNotFoundException("User not found - " + userId);
         }
         User user = userRepository.findById(userId).get();
         user.setFullName(newDisplayName);
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateAvatar(int userId, String newAvatar) {
         if (userRepository.findById(userId).isEmpty()) {
-            throw new UserNotFoundException("User not found - " + userId);
+            throw new ResourceNotFoundException("User not found - " + userId);
         }
         User user = userRepository.findById(userId).get();
         user.setAvatar(newAvatar);

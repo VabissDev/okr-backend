@@ -5,15 +5,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserNotFoundException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException {
 
     private String message;
 
-    public UserNotFoundException() {
+    public ResourceNotFoundException() {
 
     }
 
-    public UserNotFoundException(String message) {
+    public ResourceNotFoundException(String message) {
         this.message = message;
     }
 

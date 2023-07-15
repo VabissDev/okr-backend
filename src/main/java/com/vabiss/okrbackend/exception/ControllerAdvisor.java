@@ -13,8 +13,8 @@ public class ControllerAdvisor {
         return ResponseEntity.status(409).body(ErrorResponseDto.of(409, ex.getMessage()));
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> exceptionHandler(UserNotFoundException ex) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> exceptionHandler(ResourceNotFoundException ex) {
         return ResponseEntity.status(404).body(ErrorResponseDto.of(404, ex.getMessage()));
     }
 

@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/demo", "/auth/**").permitAll()
                         .requestMatchers("/demo2", "/reset-pwd-email").hasRole("USER")
                         .requestMatchers("/users/**").hasRole("USER")
+                        .requestMatchers("/workspaces/organizations/**").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess
