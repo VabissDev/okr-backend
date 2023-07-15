@@ -38,4 +38,11 @@ public class UserController {
         return ResponseEntity.ok(SuccessResponseDto.of("Avatar updated!", userDto2));
     }
 
+    @DeleteMapping("/remove/{userId}/{organizationName}")
+    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable String organizationName) {
+        userService.deleteTeamMemberAndViewer(userId, organizationName);
+
+    }
+
+
 }
