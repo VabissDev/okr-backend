@@ -3,6 +3,7 @@ package com.vabiss.okrbackend.service;
 import com.vabiss.okrbackend.dto.WorkspaceDto;
 import com.vabiss.okrbackend.entity.Organization;
 import com.vabiss.okrbackend.entity.Workspace;
+import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.OrganizationRepository;
 import com.vabiss.okrbackend.repository.WorkspaceRepository;
 import com.vabiss.okrbackend.service.inter.WorkspaceService;
@@ -22,7 +23,10 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 
     @Override
     public List<Workspace> findWorkspacesByOrganizationId(int organizationId) {
-        Organization organization = organizationRepository.findById(organizationId).orElseThrow();
+        if (organizationRepository.findById(organizationId).isEmpty()) {
+            throw new ResourceNotFoundException("Organization not found - " + organizationId);
+        }
+        Organization organization = organizationRepository.findById(organizationId).get();
         return workspaceRepository.findWorkspacesByOrganization(organization);
     }
 
