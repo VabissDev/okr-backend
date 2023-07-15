@@ -9,6 +9,12 @@ public interface WorkspaceService {
 
     List<Workspace> findWorkspacesByOrganizationId(int organizationId);
 
+    Workspace findWorkspaceById(int workspaceId);
+
+    Workspace saveWorkspace(Workspace workspace);
+
     WorkspaceDto convertToWorkspaceDto(Workspace workspace);
+
+    Workspace convertToWorkspace(WorkspaceDto workspaceDto);
 
 }

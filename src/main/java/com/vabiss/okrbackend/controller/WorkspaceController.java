@@ -27,4 +27,20 @@ public class WorkspaceController {
         return ResponseEntity.ok(SuccessResponseDto.of("Workspaces by organization", workspaceDtos));
     }
 
+    @GetMapping("{workspaceId}")
+    public ResponseEntity<SuccessResponseDto> getSingleWorkspace(@PathVariable int workspaceId) {
+        Workspace workspace = workspaceService.findWorkspaceById(workspaceId);
+        WorkspaceDto workspaceDto = workspaceService.convertToWorkspaceDto(workspace);
+
+        return ResponseEntity.ok(SuccessResponseDto.of("Workspace - " + workspaceId, workspaceDto));
+    }
+
+    @PostMapping
+    public ResponseEntity<SuccessResponseDto> createWorkspace(@RequestBody WorkspaceDto workspaceDto) {
+        Workspace workspace = workspaceService.convertToWorkspace(workspaceDto);
+        workspace = workspaceService.saveWorkspace(workspace);
+        workspaceDto = workspaceService.convertToWorkspaceDto(workspace);
+        return ResponseEntity.ok(SuccessResponseDto.of("Workspace saved", workspaceDto));
+    }
+
 }

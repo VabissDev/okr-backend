@@ -17,5 +17,6 @@ public class WorkspaceDto {
     private String description;
     private String level;
     private String status;
+    private Integer organizationId;
 
 }
