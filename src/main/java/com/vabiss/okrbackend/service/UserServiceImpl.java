@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,6 +62,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto convertToUserDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+
+    @Override
+    public void deleteTeamMemberAndViewer(int userId, String organizationName) {
+
+        User user = userRepository.getByOrganizationName(userId, organizationName);
+        userRepository.delete(user);
     }
 
 }
