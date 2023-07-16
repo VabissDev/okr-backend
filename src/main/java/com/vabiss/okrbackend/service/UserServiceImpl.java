@@ -3,15 +3,18 @@ package com.vabiss.okrbackend.service;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.VerificationToken;
+import com.vabiss.okrbackend.entity.Workspace;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.UserRepository;
 import com.vabiss.okrbackend.repository.VerificationTokenRepository;
+import com.vabiss.okrbackend.repository.WorkspaceRepository;
 import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,8 +23,18 @@ public class UserServiceImpl implements UserService {
 
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
+    private final WorkspaceRepository workspaceRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+
+    @Override
+    public List<User> findUsersByWorkspaceId(int workspaceId) {
+        if (workspaceRepository.findById(workspaceId).isEmpty()) {
+            throw new ResourceNotFoundException("Workspace not found - " + workspaceId);
+        }
+        Workspace workspace = workspaceRepository.findById(workspaceId).get();
+        return workspace.getUsers();
+    }
 
     @Override
     public String updatePassword(String verificationToken, String newPassword) {
