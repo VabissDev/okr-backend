@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/**").hasRole("USER")
                         .requestMatchers("/workspaces/organizations/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/workspaces").hasRole("LEADER")
+                        .requestMatchers("/organizations/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess
