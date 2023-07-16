@@ -17,18 +17,25 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Organization updateAvatar(int organizationId, String avatar) {
+    public OrganizationDto updateOrganization(int organizationId, OrganizationDto organizationDto) {
         if (organizationRepository.findById(organizationId).isEmpty()) {
             throw new ResourceNotFoundException("Organization not found - " + organizationId);
         }
-        Organization organization = organizationRepository.findById(organizationId).get();
-        organization.setAvatar(avatar);
-        return organizationRepository.save(organization);
+        organizationDto.setId(organizationId);
+        Organization organization = convertToOrganization(organizationDto);
+        organizationRepository.save(organization);
+
+        return convertToOrganizationDto(organization);
     }
 
     @Override
     public OrganizationDto convertToOrganizationDto(Organization organization) {
         return modelMapper.map(organization, OrganizationDto.class);
+    }
+
+    @Override
+    public Organization convertToOrganization(OrganizationDto organizationDto) {
+        return modelMapper.map(organizationDto, Organization.class);
     }
 
 }
