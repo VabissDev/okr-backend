@@ -24,14 +24,14 @@
             <column name="status" type="varchar(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="organization_id" type="integer">
+            <column name="org_id" type="integer">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint constraintName="fk_workspaces_organizations"
-                                 baseTableName="workspaces" baseColumnNames="organization_id"
-                                 referencedTableName="organizations" referencedColumnNames="organization_id"
+                                 baseTableName="workspaces" baseColumnNames="org_id"
+                                 referencedTableName="organizations" referencedColumnNames="id"
                                  onUpdate="CASCADE"/>
     </changeSet>
 

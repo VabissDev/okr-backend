@@ -26,8 +26,11 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "user_full_name")
+    @Column(name = "full_name")
     private String fullName;
+
+    private String avatar;
+
     private String email;
 
     @JsonIgnore
@@ -47,6 +50,9 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean isOrganization;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -89,6 +95,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public boolean getIsOrganization() {
+        return this.isOrganization;
+    }
+
+    public void setIsOrganization(boolean isOrganization) {
+        this.isOrganization = isOrganization;
     }
 
 }

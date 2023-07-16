@@ -1,5 +1,6 @@
 package com.vabiss.okrbackend.controller;
 
+import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.service.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @RestController
 public class EmailController {
 
@@ -18,8 +20,13 @@ public class EmailController {
     }
 
     @PostMapping("/resend-email")
-    public ResponseEntity<String> resendToken(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(emailService.resendToken(userDto.getEmail()));
+    public ResponseEntity<SuccessResponseDto> resendToken(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(SuccessResponseDto.of(emailService.resendToken(userDto.getEmail())));
+    }
+
+    @PostMapping("/reset-pwd-email")
+    public ResponseEntity<SuccessResponseDto> sendResetPasswordEmail(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(SuccessResponseDto.of(emailService.createResetPasswordEmail(userDto)));
     }
 
 }
