@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Boolean existsByEmail(String email);
 
-    @Query("select u from User u where u.id=?1 and u.organization.name=?2")
-    User getByOrganizationName(@Param(value = "id") int userId, @Param(value = "name") String organizationName);
+    @Query("select u from User u where u.id=?1 and u.organization.id=?2")
+    User getByOrganizationId(@Param(value = "id") int userId, @Param(value = "id") int organizationId);
 
 }

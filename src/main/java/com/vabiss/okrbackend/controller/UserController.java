@@ -1,5 +1,6 @@
 package com.vabiss.okrbackend.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vabiss.okrbackend.dto.ResetPasswordDto;
 import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final ObjectMapper objectMapper;
+
 
     @PutMapping("/reset-password")
     public ResponseEntity<SuccessResponseDto> updatePassword(@RequestBody ResetPasswordDto resetPasswordDto) {
@@ -38,11 +43,18 @@ public class UserController {
         return ResponseEntity.ok(SuccessResponseDto.of("Avatar updated!", userDto2));
     }
 
-    @DeleteMapping("/remove/{userId}/{organizationName}")
-    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable String organizationName) {
-        userService.deleteTeamMemberAndViewer(userId, organizationName);
+    @DeleteMapping("/remove/{userId}/{organizationId}")
+    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
+        userService.deleteTeamMemberAndViewer(userId, organizationId);
 
     }
 
+
+//    @PostMapping("/add/{userId}/{organizationId}")
+//    public void addMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
+//        userService.addTeamMemberAndViewer(userId, organizationId);
+////        User user = userService.getById(userId);
+////        userService.save(user);
+//    }
 
 }
