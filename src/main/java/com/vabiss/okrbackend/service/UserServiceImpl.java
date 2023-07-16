@@ -128,6 +128,11 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserFormDto.class);
     }
 
+    @Override
+    public void deleteUser(int userId) {
+        userRepository.deleteById(userId);
+    }
+
 
 //    @Override
 //    public User updateUser(UserDto userDto, int userId) {

@@ -8,6 +8,7 @@ import com.vabiss.okrbackend.dto.UserFormDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +73,11 @@ public class UserController {
         User user = userService.createUser(organizationId, userFormDto);
         UserFormDto userFormDto1 = userService.convertToUserFormDto(user);
         return ResponseEntity.ok(SuccessResponseDto.of("User created!", userFormDto1));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{userId}")
+    public void removeUser(@PathVariable int userId) {
+        userService.deleteUser(userId);
     }
 }
