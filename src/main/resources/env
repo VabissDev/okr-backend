@@ -1,0 +1,6 @@
+EMAIL_USERNAME="vabiss.test1@gmail.com"
+EMAIL_PASSWORD="uqjgeozovzhrleqx"
+
+DATABASE_URL="jdbc:postgresql://db.oigagirhesmgcounxuel.supabase.co:5432/postgres"
+USERNAME="postgres"
+PASSWORD="Postgres12345!"

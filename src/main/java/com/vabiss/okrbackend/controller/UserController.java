@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vabiss.okrbackend.dto.ResetPasswordDto;
 import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
+import com.vabiss.okrbackend.dto.UserFormDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
@@ -65,4 +66,11 @@ public class UserController {
 ////        userService.save(user);
 //    }
 
+    @PostMapping("/{organizationId}")
+    public ResponseEntity<SuccessResponseDto> createUser(@PathVariable int organizationId,
+                                                         @RequestBody UserFormDto userFormDto) {
+        User user = userService.createUser(organizationId, userFormDto);
+        UserFormDto userFormDto1 = userService.convertToUserFormDto(user);
+        return ResponseEntity.ok(SuccessResponseDto.of("User created!", userFormDto1));
+    }
 }

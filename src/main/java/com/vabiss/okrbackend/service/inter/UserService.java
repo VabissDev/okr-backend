@@ -1,6 +1,7 @@
 package com.vabiss.okrbackend.service.inter;
 
 import com.vabiss.okrbackend.dto.UserDto;
+import com.vabiss.okrbackend.dto.UserFormDto;
 import com.vabiss.okrbackend.entity.User;
 
 import java.util.List;
@@ -25,5 +26,11 @@ public interface UserService {
     void deleteTeamMemberAndViewer(int userId, int organizationId);
 
     User addTeamMemberAndViewer(int userId, int organizationId);
+
+    User createUser(int organizationId, UserFormDto userFormDto);
+
+    UserFormDto convertToUserFormDto(User user);
+
+    User updateUser(UserDto userDto, int userId);
 
 }
