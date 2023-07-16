@@ -3,15 +3,18 @@ package com.vabiss.okrbackend.service;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.VerificationToken;
+import com.vabiss.okrbackend.entity.Workspace;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.UserRepository;
 import com.vabiss.okrbackend.repository.VerificationTokenRepository;
+import com.vabiss.okrbackend.repository.WorkspaceRepository;
 import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
+    private final WorkspaceRepository workspaceRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
@@ -67,6 +71,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(int userId) {
         return userRepository.findById(userId).get();
+//        return userRepository.getById(userId);
     }
 
     public User save(User user) {
@@ -74,21 +79,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteTeamMemberAndViewer(int userId, int organizationId) {
+    public void deleteTeamMemberAndViewer(int userId, int workspaceId) {
 
-        User user = userRepository.getByOrganizationId(userId, organizationId);
+        List<Workspace> workspaces = userRepository.getById(userId).getWorkspaces();
 
-        if (user == null) {
+        if (!workspaces.contains(workspaceId)) {
             throw new ResourceNotFoundException("You do not have permission to delete this user");
         }
-        userRepository.delete(user);
+        userRepository.delete(userRepository.getById(userId));
+
 
     }
 
     @Override
-    public User addTeamMemberAndViewer(int userId, int organizationId) {
-        User user = userRepository.findById(userId).get();
-        user.getOrganization().setId(organizationId);
+    public User addTeamMemberAndViewer(int userId, int workspaceId) {
+        User user = userRepository.getById(userId);
+        Workspace workspace = workspaceRepository.getById(workspaceId);
+
+//        user.getWorkspaces().
+        user.setWorkspaces((List<Workspace>) workspace);
+
+//        List<Workspace> workspaces = user.getWorkspaces();
+//       for(Workspace w:workspaces){
+//           w.setId(workspaceId);
+//       }
         return userRepository.save(user);
     }
 

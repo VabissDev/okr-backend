@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
@@ -43,18 +41,28 @@ public class UserController {
         return ResponseEntity.ok(SuccessResponseDto.of("Avatar updated!", userDto2));
     }
 
-    @DeleteMapping("/remove/{userId}/{organizationId}")
-    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
-        userService.deleteTeamMemberAndViewer(userId, organizationId);
+//    @DeleteMapping("/remove/{userId}/{organizationId}")
+//    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
+//        userService.deleteTeamMemberAndViewer(userId, organizationId);
+//
+//    }
+
+    @DeleteMapping("/remove/{userId}/{workspaceId}")
+    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable int workspaceId) {
+        userService.deleteTeamMemberAndViewer(userId, workspaceId);
 
     }
 
 
-//    @PostMapping("/add/{userId}/{organizationId}")
-//    public void addMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
-//        userService.addTeamMemberAndViewer(userId, organizationId);
-////        User user = userService.getById(userId);
-////        userService.save(user);
-//    }
+    @PostMapping("/add/{userId}/{workspaceId}")
+    public void addMemberAndViewer(@PathVariable int userId, @PathVariable int workspaceId) {
+        userService.addTeamMemberAndViewer(userId, workspaceId);
+//        User user = userService.getById(userId);
+//        userService.save(user);
+    }
 
+    @GetMapping("/get/{userId}")
+    public User getById(@PathVariable int userId) {
+        return userService.getById(userId);
+    }
 }

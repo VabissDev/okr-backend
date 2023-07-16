@@ -18,8 +18,8 @@ public interface UserService {
     //    User getAllTeamMember(String organizationName);
     User save(User user);
 
-    void deleteTeamMemberAndViewer(int userId, int organizationId);
+    void deleteTeamMemberAndViewer(int userId, int workspaceId);
 
-    User addTeamMemberAndViewer(int userId, int organizationId);
+    User addTeamMemberAndViewer(int userId, int workspaceId);
 
 }
