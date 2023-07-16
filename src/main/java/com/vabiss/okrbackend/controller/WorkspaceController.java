@@ -27,7 +27,7 @@ public class WorkspaceController {
         return ResponseEntity.ok(SuccessResponseDto.of("Workspaces by organization", workspaceDtos));
     }
 
-    @GetMapping("{workspaceId}")
+    @GetMapping("/{workspaceId}")
     public ResponseEntity<SuccessResponseDto> getSingleWorkspace(@PathVariable int workspaceId) {
         Workspace workspace = workspaceService.findWorkspaceById(workspaceId);
         WorkspaceDto workspaceDto = workspaceService.convertToWorkspaceDto(workspace);

@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 @RestController
@@ -16,6 +18,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/workspaces/{workspaceId}")
+    public ResponseEntity<SuccessResponseDto> getUsersByWorkspaceId(@PathVariable int workspaceId) {
+        List<User> users = userService.findUsersByWorkspaceId(workspaceId);
+        List<UserDto> userDtos = users.stream().map(userService::convertToUserDto).toList();
+        return ResponseEntity.ok(SuccessResponseDto.of("Users of workspace", userDtos));
+    }
 
     @PutMapping("/reset-password")
     public ResponseEntity<SuccessResponseDto> updatePassword(@RequestBody ResetPasswordDto resetPasswordDto) {
