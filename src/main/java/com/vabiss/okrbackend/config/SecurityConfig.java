@@ -27,8 +27,10 @@ public class SecurityConfig {
                         .requestMatchers("/demo", "/auth/**").permitAll()
                         .requestMatchers("/demo2", "/reset-pwd-email").hasRole("USER")
                         .requestMatchers("/users/**").hasRole("USER")
-                        .requestMatchers("/workspaces/organizations/**").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/workspaces").hasRole("LEADER")
+                        .requestMatchers("/workspaces/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/organizations/**").hasRole("USER")
+                        .requestMatchers("/organizations/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess
