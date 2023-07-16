@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -74,6 +75,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto convertToUserDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public User getById(int userId) {
+        return userRepository.findById(userId).get();
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteTeamMemberAndViewer(int userId, int organizationId) {
+
+        User user = userRepository.getByOrganizationId(userId, organizationId);
+
+        if (user == null) {
+            throw new ResourceNotFoundException("You do not have permission to delete this user");
+        }
+        userRepository.delete(user);
+
+    }
+
+    @Override
+    public User addTeamMemberAndViewer(int userId, int organizationId) {
+        User user = userRepository.findById(userId).get();
+        user.getOrganization().setId(organizationId);
+        return userRepository.save(user);
     }
 
 }

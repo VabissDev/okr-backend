@@ -17,4 +17,13 @@ public interface UserService {
 
     UserDto convertToUserDto(User user);
 
+    User getById(int userId);
+
+    //    User getAllTeamMember(String organizationName);
+    User save(User user);
+
+    void deleteTeamMemberAndViewer(int userId, int organizationId);
+
+    User addTeamMemberAndViewer(int userId, int organizationId);
+
 }
