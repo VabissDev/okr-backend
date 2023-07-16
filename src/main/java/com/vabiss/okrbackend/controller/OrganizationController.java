@@ -15,6 +15,12 @@ public class OrganizationController {
 
     private final OrganizationService organizationService;
 
+    @GetMapping("{organizationId}")
+    public ResponseEntity<SuccessResponseDto> getOrganization(@PathVariable int organizationId) {
+        OrganizationDto organizationDto = organizationService.findOrganizationById(organizationId);
+        return ResponseEntity.ok(SuccessResponseDto.of("Org", organizationDto));
+    }
+
     @PutMapping("/{organizationId}")
     public ResponseEntity<SuccessResponseDto> updateOrganization(@PathVariable int organizationId,
                                                                  @RequestBody OrganizationDto organizationDto) {

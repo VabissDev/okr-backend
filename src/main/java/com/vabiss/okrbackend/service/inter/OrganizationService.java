@@ -5,6 +5,8 @@ import com.vabiss.okrbackend.entity.Organization;
 
 public interface OrganizationService {
 
+    OrganizationDto findOrganizationById(int organizationId);
+
     OrganizationDto updateOrganization(int organizationId, OrganizationDto organizationDto);
 
     OrganizationDto convertToOrganizationDto(Organization organization);

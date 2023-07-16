@@ -17,6 +17,14 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final ModelMapper modelMapper;
 
     @Override
+    public OrganizationDto findOrganizationById(int organizationId) {
+        if (organizationRepository.findById(organizationId).isEmpty()) {
+            throw new ResourceNotFoundException("Organization not found - " + organizationId);
+        }
+        return convertToOrganizationDto(organizationRepository.findById(organizationId).get());
+    }
+
+    @Override
     public OrganizationDto updateOrganization(int organizationId, OrganizationDto organizationDto) {
         if (organizationRepository.findById(organizationId).isEmpty()) {
             throw new ResourceNotFoundException("Organization not found - " + organizationId);
