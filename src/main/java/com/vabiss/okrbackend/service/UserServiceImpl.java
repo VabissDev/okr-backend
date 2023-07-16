@@ -64,12 +64,32 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
+    @Override
+    public User getById(int userId) {
+        return userRepository.findById(userId).get();
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 
     @Override
-    public void deleteTeamMemberAndViewer(int userId, String organizationName) {
+    public void deleteTeamMemberAndViewer(int userId, int organizationId) {
 
-        User user = userRepository.getByOrganizationName(userId, organizationName);
+        User user = userRepository.getByOrganizationId(userId, organizationId);
+
+        if (user == null) {
+            throw new ResourceNotFoundException("You do not have permission to delete this user");
+        }
         userRepository.delete(user);
+
+    }
+
+    @Override
+    public User addTeamMemberAndViewer(int userId, int organizationId) {
+        User user = userRepository.findById(userId).get();
+        user.getOrganization().setId(organizationId);
+        return userRepository.save(user);
     }
 
 }
