@@ -44,6 +44,29 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     }
 
     @Override
+    public WorkspaceDto updateWorkspace(int workspaceId, WorkspaceDto workspaceDto) {
+        if (workspaceRepository.findById(workspaceId).isEmpty()) {
+            throw new ResourceNotFoundException("Workspace not found - " + workspaceId);
+        }
+        workspaceDto.setId(workspaceId);
+        Workspace workspace = convertToWorkspace(workspaceDto);
+        workspaceRepository.save(workspace);
+        return convertToWorkspaceDto(workspace);
+    }
+
+    @Override
+    public WorkspaceDto updateWorkspaceOwner(int workspaceId, String owner) {
+        if (workspaceRepository.findById(workspaceId).isEmpty()) {
+            throw new ResourceNotFoundException("Workspace not found - " + workspaceId);
+        }
+        Workspace workspace = workspaceRepository.findById(workspaceId).get();
+        workspace.setOwner(owner);
+        workspaceRepository.save(workspace);
+
+        return convertToWorkspaceDto(workspace);
+    }
+
+    @Override
     public WorkspaceDto convertToWorkspaceDto(Workspace workspace) {
         return modelMapper.map(workspace, WorkspaceDto.class);
     }

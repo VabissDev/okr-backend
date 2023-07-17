@@ -13,6 +13,10 @@ public interface WorkspaceService {
 
     Workspace saveWorkspace(Workspace workspace);
 
+    WorkspaceDto updateWorkspace(int workspaceId, WorkspaceDto workspaceDto);
+
+    WorkspaceDto updateWorkspaceOwner(int workspaceId, String owner);
+
     WorkspaceDto convertToWorkspaceDto(Workspace workspace);
 
     Workspace convertToWorkspace(WorkspaceDto workspaceDto);

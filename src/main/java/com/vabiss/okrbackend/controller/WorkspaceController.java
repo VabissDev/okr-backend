@@ -43,4 +43,18 @@ public class WorkspaceController {
         return ResponseEntity.ok(SuccessResponseDto.of("Workspace saved", workspaceDto));
     }
 
+    @PutMapping("/{workspaceId}")
+    public ResponseEntity<SuccessResponseDto> updateWorkspace(@PathVariable int workspaceId,
+                                                              @RequestBody WorkspaceDto workspaceDto) {
+        WorkspaceDto workspaceDto1 = workspaceService.updateWorkspace(workspaceId, workspaceDto);
+        return ResponseEntity.ok(SuccessResponseDto.of("Updated", workspaceDto1));
+    }
+
+    @PutMapping("/{workspaceId}/owner")
+    public ResponseEntity<SuccessResponseDto> updateWorkspaceOwner(@PathVariable int workspaceId,
+                                                                   @RequestBody WorkspaceDto workspaceDto) {
+        WorkspaceDto workspaceDto1 = workspaceService.updateWorkspaceOwner(workspaceId, workspaceDto.getOwner());
+        return ResponseEntity.ok(SuccessResponseDto.of("Owner updated", workspaceDto1));
+    }
+
 }
