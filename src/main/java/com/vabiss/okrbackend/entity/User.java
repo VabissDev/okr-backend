@@ -2,10 +2,7 @@ package com.vabiss.okrbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -105,4 +102,20 @@ public class User implements UserDetails {
         this.isOrganization = isOrganization;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", workspaces=" + workspaces +
+                ", organization=" + organization +
+                ", isOrganization=" + isOrganization +
+                ", roles=" + roles +
+                ", verificationToken=" + verificationToken +
+                '}';
+    }
 }

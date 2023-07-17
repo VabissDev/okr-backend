@@ -20,12 +20,11 @@ public interface UserService {
 
     User getById(int userId);
 
-    //    User getAllTeamMember(String organizationName);
     User save(User user);
 
-    void deleteTeamMemberAndViewer(int userId, int organizationId);
+    void deleteTeamMemberAndViewer(int userId, int workspaceId);
 
-    User addTeamMemberAndViewer(int userId, int organizationId);
+    User addTeamMemberAndViewer(int userId, int workspaceId);
 
     User createUser(int organizationId, UserFormDto userFormDto);
 

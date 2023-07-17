@@ -53,19 +53,17 @@ public class UserController {
         return ResponseEntity.ok(SuccessResponseDto.of("Avatar updated!", userDto2));
     }
 
-    @DeleteMapping("/remove/{userId}/{organizationId}")
-    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
-        userService.deleteTeamMemberAndViewer(userId, organizationId);
+    @DeleteMapping("/remove/{userId}/{workspaceId}")
+    public void removeTeamMemberAndViewer(@PathVariable int userId, @PathVariable int workspaceId) {
+        userService.deleteTeamMemberAndViewer(userId, workspaceId);
 
     }
 
+    @PostMapping("/add/{userId}/{workspaceId}")
+    public void addMemberAndViewer(@PathVariable int userId, @PathVariable int workspaceId) {
+        userService.addTeamMemberAndViewer(userId, workspaceId);
+    }
 
-//    @PostMapping("/add/{userId}/{organizationId}")
-//    public void addMemberAndViewer(@PathVariable int userId, @PathVariable int organizationId) {
-//        userService.addTeamMemberAndViewer(userId, organizationId);
-////        User user = userService.getById(userId);
-////        userService.save(user);
-//    }
 
     @PostMapping("/{organizationId}")
     public ResponseEntity<SuccessResponseDto> createUser(@PathVariable int organizationId,
