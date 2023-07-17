@@ -1,5 +1,6 @@
 package com.vabiss.okrbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,6 +11,7 @@ import java.util.List;
 @Table(name = "workspaces")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@ToString
 @Data
 @Builder
 @AllArgsConstructor
@@ -35,6 +37,7 @@ public class Workspace {
     String status;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "workspaces", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
     List<User> users;
 
     @ManyToOne

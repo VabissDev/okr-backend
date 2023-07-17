@@ -2,7 +2,10 @@ package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.dto.UserFormDto;
-import com.vabiss.okrbackend.entity.*;
+import com.vabiss.okrbackend.entity.Role;
+import com.vabiss.okrbackend.entity.User;
+import com.vabiss.okrbackend.entity.VerificationToken;
+import com.vabiss.okrbackend.entity.Workspace;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.*;
 import com.vabiss.okrbackend.service.inter.UserService;
@@ -12,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,21 +92,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteTeamMemberAndViewer(int userId, int organizationId) {
-
-        User user = userRepository.getByOrganizationId(userId, organizationId);
-
-        if (user == null) {
-            throw new ResourceNotFoundException("You do not have permission to delete this user");
-        }
-        userRepository.delete(user);
+    public void deleteTeamMemberAndViewer(int userId, int workspaceId) {
+        userRepository.deleteMemberAndUser(userId, workspaceId);
 
     }
 
     @Override
-    public User addTeamMemberAndViewer(int userId, int organizationId) {
-        User user = userRepository.findById(userId).get();
-        user.getOrganization().setId(organizationId);
+    public User addTeamMemberAndViewer(int userId, int workspaceId) {
+
+        User user = userRepository.getById(userId);
+        Workspace workspace = workspaceRepository.getById(workspaceId);
+        List<Workspace> workspaceList = user.getWorkspaces();
+        workspaceList.add(workspace);
+
+        user.setWorkspaces(workspaceList);
         return userRepository.save(user);
     }
 
