@@ -82,7 +82,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(int userId) {
         return userRepository.findById(userId).get();
-//        return userRepository.getById(userId);
     }
 
     public User save(User user) {
@@ -91,15 +90,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteTeamMemberAndViewer(int userId, int workspaceId) {
-
-        User user = userRepository.getById(userId);
-//        List<Workspace> workspaces = userRepository.getById(userId).getWorkspaces();
-
-//        if (!workspaces.contains(workspaceId)) {
-//            throw new ResourceNotFoundException("You do not have permission to delete this user");
-//        }
-        userRepository.delete(userRepository.getById(userId));
-
+        userRepository.deleteMemberAndUser(userId, workspaceId);
 
     }
 
