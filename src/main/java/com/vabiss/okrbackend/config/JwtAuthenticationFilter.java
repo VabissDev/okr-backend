@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 @Component
 @RequiredArgsConstructor
@@ -35,7 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String username;
 
-        System.out.println("header names:" + request.getHeaderNames());
+        Enumeration<String> headers = request.getHeaderNames();
+        for (int i = 0; i < 10; i++) {
+            if (headers.hasMoreElements()) {
+                System.out.println("header names:" + headers.nextElement());
+            }
+        }
         System.out.println(header);
         System.out.println("hello");
 
