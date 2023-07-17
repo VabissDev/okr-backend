@@ -1,15 +1,15 @@
 package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.UserDto;
+import com.vabiss.okrbackend.dto.UserFormDto;
 import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.VerificationToken;
 import com.vabiss.okrbackend.entity.Workspace;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
-import com.vabiss.okrbackend.repository.UserRepository;
-import com.vabiss.okrbackend.repository.VerificationTokenRepository;
-import com.vabiss.okrbackend.repository.WorkspaceRepository;
+import com.vabiss.okrbackend.repository.*;
 import com.vabiss.okrbackend.service.inter.UserService;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Builder
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private final WorkspaceRepository workspaceRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private final OrganizationRepository organizationRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public List<User> findUsersByWorkspaceId(int workspaceId) {
@@ -106,4 +109,40 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public User createUser(int organizationId, UserFormDto userFormDto) {
+        List<Role> roles = roleRepository.findAll();
+        List<Role> userRoles = roles.stream()
+                .dropWhile(role -> !role.getRoleName().equals(userFormDto.getRoles().get(0).getRoleName()))
+                .collect(Collectors.toList());
+        return User.builder()
+                .fullName(userFormDto.getFullName())
+                .email(userFormDto.getFullName())
+                .password(userFormDto.getEmail())
+                .enabled(true)
+                .isOrganization(false)
+                .organization(organizationRepository.findById(organizationId).get())
+                .roles(userRoles)
+                .build();
+    }
+
+    @Override
+    public UserFormDto convertToUserFormDto(User user) {
+        return modelMapper.map(user, UserFormDto.class);
+    }
+
+    @Override
+    public void deleteUser(int userId) {
+        userRepository.deleteById(userId);
+    }
+
+
+//    @Override
+//    public User updateUser(UserDto userDto, int userId) {
+//        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found - " + userId));
+//
+//        user.setFullName(userDto.getFullName());
+//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//        return userRepository.save(user);
+//    }
 }

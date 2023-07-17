@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vabiss.okrbackend.dto.ResetPasswordDto;
 import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
+import com.vabiss.okrbackend.dto.UserFormDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,4 +65,17 @@ public class UserController {
     }
 
 
+    @PostMapping("/{organizationId}")
+    public ResponseEntity<SuccessResponseDto> createUser(@PathVariable int organizationId,
+                                                         @RequestBody UserFormDto userFormDto) {
+        User user = userService.createUser(organizationId, userFormDto);
+        UserFormDto userFormDto1 = userService.convertToUserFormDto(user);
+        return ResponseEntity.ok(SuccessResponseDto.of("User created!", userFormDto1));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{userId}")
+    public void removeUser(@PathVariable int userId) {
+        userService.deleteUser(userId);
+    }
 }
