@@ -111,11 +111,7 @@ public class User implements UserDetails {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
-                ", workspaces=" + workspaces +
-                ", organization=" + organization +
                 ", isOrganization=" + isOrganization +
-                ", roles=" + roles +
-                ", verificationToken=" + verificationToken +
                 '}';
     }
 }
