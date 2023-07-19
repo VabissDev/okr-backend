@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {

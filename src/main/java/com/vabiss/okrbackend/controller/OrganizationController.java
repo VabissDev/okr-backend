@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin")
+//@CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin", allowedHeaders = {"authorization"})
 @RestController
 @RequestMapping("/organizations")
 public class OrganizationController {

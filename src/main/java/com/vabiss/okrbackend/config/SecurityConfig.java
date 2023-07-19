@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        httpSecurity.httpBasic(Customizer.withDefaults());
+//        httpSecurity.httpBasic(Customizer.withDefaults());
 
         return httpSecurity.build();
     }
