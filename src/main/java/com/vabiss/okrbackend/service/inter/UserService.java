@@ -12,7 +12,7 @@ public interface UserService {
 
     String updatePassword(String verificationToken, String newPassword);
 
-    User updateDisplayName(int userId, String newDisplayName);
+    User updateFullName(int userId, String newFullName);
 
     User updateAvatar(int userId, String newAvatar);
 
