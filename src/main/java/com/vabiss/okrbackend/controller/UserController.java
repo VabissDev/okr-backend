@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*")
+@CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin")
 @RestController
 @RequestMapping("/users")
 public class UserController {

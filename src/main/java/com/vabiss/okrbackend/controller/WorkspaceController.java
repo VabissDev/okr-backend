@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*")
+@CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin")
 @RestController
 @RequestMapping("/workspaces")
 public class WorkspaceController {
