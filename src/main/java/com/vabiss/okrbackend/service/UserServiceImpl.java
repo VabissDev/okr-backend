@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(int organizationId, UserFormDto userFormDto) {
-        if (userRepository.findByEmail(userFormDto.getEmail()).isEmpty()) {
+        if (userRepository.existsByEmail(userFormDto.getEmail())) {
             throw new CurrentStateResourceException("Email is already in use!");
         }
         List<String> rolesStr = new ArrayList<>(List.of("ADMIN", "LEADER", "MEMBER", "VIEWER", "USER"));
