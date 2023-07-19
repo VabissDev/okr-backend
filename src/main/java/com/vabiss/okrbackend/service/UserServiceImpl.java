@@ -6,6 +6,7 @@ import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.VerificationToken;
 import com.vabiss.okrbackend.entity.Workspace;
+import com.vabiss.okrbackend.exception.CurrentStateResourceException;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.*;
 import com.vabiss.okrbackend.service.inter.UserService;
@@ -15,9 +16,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Builder
 @RequiredArgsConstructor
@@ -31,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final OrganizationRepository organizationRepository;
     private final RoleRepository roleRepository;
+    private final EmailService emailService;
 
     @Override
     public List<User> findUsersByWorkspaceId(int workspaceId) {
@@ -56,12 +56,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateDisplayName(int userId, String newDisplayName) {
+    public User updateFullName(int userId, String newFullName) {
         if (userRepository.findById(userId).isEmpty()) {
             throw new ResourceNotFoundException("User not found - " + userId);
         }
         User user = userRepository.findById(userId).get();
-        user.setFullName(newDisplayName);
+        user.setFullName(newFullName);
 
         return userRepository.save(user);
     }
@@ -111,19 +111,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(int organizationId, UserFormDto userFormDto) {
-        List<Role> roles = roleRepository.findAll();
-        List<Role> userRoles = roles.stream()
-                .dropWhile(role -> !role.getRoleName().equals(userFormDto.getRoles().get(0).getRoleName()))
-                .collect(Collectors.toList());
-        return User.builder()
+        if (userRepository.existsByEmail(userFormDto.getEmail())) {
+            throw new CurrentStateResourceException("Email is already in use!");
+        }
+        List<String> rolesStr = new ArrayList<>(List.of("ADMIN", "LEADER", "MEMBER", "VIEWER", "USER"));
+        String userRole = userFormDto.getRole().toUpperCase(Locale.ENGLISH);
+        List<Role> roles = rolesStr.stream()
+                .skip(rolesStr.indexOf(userRole))
+                .map(roleRepository::findRoleByRoleName)
+                .toList();
+
+        String password = UUID.randomUUID().toString();
+
+        User user = User.builder()
                 .fullName(userFormDto.getFullName())
-                .email(userFormDto.getFullName())
-                .password(userFormDto.getEmail())
+                .email(userFormDto.getEmail())
+                .password(passwordEncoder.encode(password))
                 .enabled(true)
                 .isOrganization(false)
                 .organization(organizationRepository.findById(organizationId).get())
-                .roles(userRoles)
+                .roles(roles)
                 .build();
+
+        emailService.sendCreatedUserDetails(user,
+                "OKR information",
+                "<p>Email: " + user.getEmail() + "</p>" + "<p>Password: " + password + "</p>",
+                "https://vabiss-okr.vercel.app/login");
+
+        return userRepository.save(user);
     }
 
     @Override

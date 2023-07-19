@@ -93,4 +93,20 @@ public class EmailService {
         return "Reset password email sent!";
     }
 
+    public void sendCreatedUserDetails(User user, String subject, String msg, String link) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        String htmlMsg = msg + link;
+        try {
+            helper.setText(htmlMsg, true);
+            helper.setTo(user.getUsername());
+            helper.setSubject(subject);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        sendEmail(mimeMessage);
+    }
+
 }
