@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface WorkspaceService {
 
-    List<Workspace> findWorkspacesByOrganizationId(int organizationId);
+    List<WorkspaceDto> findWorkspacesByOrganizationId(int organizationId);
 
-    Workspace findWorkspaceById(int workspaceId);
+    WorkspaceDto findWorkspaceById(int workspaceId);
 
-    Workspace saveWorkspace(Workspace workspace);
+    WorkspaceDto saveWorkspace(WorkspaceDto workspaceDto);
 
     WorkspaceDto updateWorkspace(int workspaceId, WorkspaceDto workspaceDto);
 

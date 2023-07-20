@@ -31,25 +31,34 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     private final EmailService emailService;
 
     @Override
-    public List<Workspace> findWorkspacesByOrganizationId(int organizationId) {
+    public List<WorkspaceDto> findWorkspacesByOrganizationId(int organizationId) {
         if (organizationRepository.findById(organizationId).isEmpty()) {
             throw new ResourceNotFoundException("Organization not found - " + organizationId);
         }
         Organization organization = organizationRepository.findById(organizationId).get();
-        return workspaceRepository.findWorkspacesByOrganization(organization);
+        List<Workspace> workspaces = workspaceRepository.findWorkspacesByOrganization(organization);
+
+        return workspaces.stream()
+                .map(this::convertToWorkspaceDto).toList();
     }
 
     @Override
-    public Workspace findWorkspaceById(int workspaceId) {
+    public WorkspaceDto findWorkspaceById(int workspaceId) {
         if (workspaceRepository.findById(workspaceId).isEmpty()) {
             throw new ResourceNotFoundException("Workspace not found - " + workspaceId);
         }
-        return workspaceRepository.findById(workspaceId).get();
+        Workspace workspace = workspaceRepository.findById(workspaceId).get();
+        return convertToWorkspaceDto(workspace);
     }
 
     @Override
-    public Workspace saveWorkspace(Workspace workspace) {
-        return workspaceRepository.save(workspace);
+    public WorkspaceDto saveWorkspace(WorkspaceDto workspaceDto) {
+        int organizationId = workspaceDto.getOrganizationId();
+        if (organizationRepository.findById(organizationId).isEmpty()) {
+            throw new ResourceNotFoundException("Organization not found - " + organizationId);
+        }
+        Workspace workspace = convertToWorkspace(workspaceDto);
+        return convertToWorkspaceDto(workspaceRepository.save(workspace));
     }
 
     @Override
