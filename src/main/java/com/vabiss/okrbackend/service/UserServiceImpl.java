@@ -150,14 +150,4 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int userId) {
         userRepository.deleteById(userId);
     }
-
-
-//    @Override
-//    public User updateUser(UserDto userDto, int userId) {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found - " + userId));
-//
-//        user.setFullName(userDto.getFullName());
-//        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//        return userRepository.save(user);
-//    }
 }

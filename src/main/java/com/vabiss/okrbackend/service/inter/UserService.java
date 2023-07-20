@@ -30,7 +30,5 @@ public interface UserService {
 
     UserFormDto convertToUserFormDto(User user);
 
-//    User updateUser(UserDto userDto, int userId);
-
     void deleteUser(int userId);
 }
