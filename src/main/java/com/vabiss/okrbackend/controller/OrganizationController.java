@@ -2,10 +2,14 @@ package com.vabiss.okrbackend.controller;
 
 import com.vabiss.okrbackend.dto.OrganizationDto;
 import com.vabiss.okrbackend.dto.SuccessResponseDto;
+import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.service.inter.OrganizationService;
+import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin")
@@ -28,5 +32,6 @@ public class OrganizationController {
 
         return ResponseEntity.ok(SuccessResponseDto.of("Org updated", organizationDto1));
     }
+
 
 }

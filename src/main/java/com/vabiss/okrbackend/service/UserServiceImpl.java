@@ -93,7 +93,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteTeamMemberAndViewer(int userId, int workspaceId) {
-        userRepository.deleteMemberAndUser(userId, workspaceId);
+
+        userRepository.deleteMemberAndViewer(userId, workspaceId);
 
     }
 
@@ -130,6 +131,8 @@ public class UserServiceImpl implements UserService {
     public UserFormDto convertToUserFormDto(User user) {
         return modelMapper.map(user, UserFormDto.class);
     }
+
+
 
     @Override
     public void deleteUser(int userId) {

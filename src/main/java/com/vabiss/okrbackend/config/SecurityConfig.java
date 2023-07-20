@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/demo", "/auth/**").permitAll()
                         .requestMatchers("/demo2", "/reset-pwd-email").hasRole("USER")
                         .requestMatchers("/users/**").hasRole("USER")
+                        .requestMatchers("/invitation/**").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT, "/workspaces/**").hasRole("ADMIN") //+
                         .requestMatchers(HttpMethod.POST, "/workspaces").hasRole("LEADER") //+
                         .requestMatchers("/workspaces/**").hasRole("USER") //+

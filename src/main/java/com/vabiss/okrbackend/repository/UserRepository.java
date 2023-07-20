@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
 
     Optional<User> findByEmail(String email);
 
@@ -21,5 +23,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM workspace_user WHERE user_id = :userId and workspace_id = :workspaceId", nativeQuery = true)
-    void deleteMemberAndUser(@Param("userId") int userId, @Param("workspaceId") int workspaceId);
+    void deleteMemberAndViewer(@Param("userId") int userId, @Param("workspaceId") int workspaceId);
 }
