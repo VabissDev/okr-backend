@@ -57,4 +57,11 @@ public class WorkspaceController {
         return ResponseEntity.ok(SuccessResponseDto.of("Owner updated", workspaceDto1));
     }
 
+
+    @PostMapping("/{workspaceId}/invite/{userId}")
+    public ResponseEntity<SuccessResponseDto> inviteUserToWorkspace(@PathVariable int workspaceId, @PathVariable int userId) {
+        workspaceService.inviteUserToWorkspace(workspaceId, userId);
+        return ResponseEntity.ok(SuccessResponseDto.of("User invited successfully"));
+    }
+
 }
