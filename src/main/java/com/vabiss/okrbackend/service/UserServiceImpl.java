@@ -147,6 +147,15 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user, UserFormDto.class);
     }
 
+//    @Override
+//    public User acceptInvite(int workspaceId, int userId) {
+//        User user = userRepository.getById(userId);
+//        Workspace workspace = workspaceRepository.getById(workspaceId);
+//        List<Workspace> workspaces = user.getWorkspaces();
+//        workspaces.add(workspace);
+//        user.setWorkspaces(workspaces);
+//        return user;
+//    }
 
 
     @Override

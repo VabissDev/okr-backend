@@ -2,10 +2,8 @@ package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.WorkspaceDto;
 import com.vabiss.okrbackend.entity.Organization;
-import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.Workspace;
-import com.vabiss.okrbackend.exception.CurrentStateResourceException;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.OrganizationRepository;
 import com.vabiss.okrbackend.repository.UserRepository;
@@ -15,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -31,25 +26,34 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     private final EmailService emailService;
 
     @Override
-    public List<Workspace> findWorkspacesByOrganizationId(int organizationId) {
+    public List<WorkspaceDto> findWorkspacesByOrganizationId(int organizationId) {
         if (organizationRepository.findById(organizationId).isEmpty()) {
             throw new ResourceNotFoundException("Organization not found - " + organizationId);
         }
         Organization organization = organizationRepository.findById(organizationId).get();
-        return workspaceRepository.findWorkspacesByOrganization(organization);
+        List<Workspace> workspaces = workspaceRepository.findWorkspacesByOrganization(organization);
+
+        return workspaces.stream()
+                .map(this::convertToWorkspaceDto).toList();
     }
 
     @Override
-    public Workspace findWorkspaceById(int workspaceId) {
+    public WorkspaceDto findWorkspaceById(int workspaceId) {
         if (workspaceRepository.findById(workspaceId).isEmpty()) {
             throw new ResourceNotFoundException("Workspace not found - " + workspaceId);
         }
-        return workspaceRepository.findById(workspaceId).get();
+        Workspace workspace = workspaceRepository.findById(workspaceId).get();
+        return convertToWorkspaceDto(workspace);
     }
 
     @Override
-    public Workspace saveWorkspace(Workspace workspace) {
-        return workspaceRepository.save(workspace);
+    public WorkspaceDto saveWorkspace(WorkspaceDto workspaceDto) {
+        int organizationId = workspaceDto.getOrganizationId();
+        if (organizationRepository.findById(organizationId).isEmpty()) {
+            throw new ResourceNotFoundException("Organization not found - " + organizationId);
+        }
+        Workspace workspace = convertToWorkspace(workspaceDto);
+        return convertToWorkspaceDto(workspaceRepository.save(workspace));
     }
 
     @Override
@@ -90,9 +94,9 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         Workspace workspace = workspaceRepository.findById(workspaceId).orElseThrow(() -> new RuntimeException("Workspace not found"));
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-//        if (!workspace.getOwner().equals(user.getUsername())) {
-//            throw new RuntimeException("Only workspace creators can invite other users");
-//        }
+        if (!workspace.getOwner().equals(user.getUsername())) {
+            throw new RuntimeException("Only workspace creators can invite other users");
+        }
 
         if (workspace.getUsers().contains(user)) {
             throw new RuntimeException("User is already a member of this workspace");
@@ -111,6 +115,17 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 
         String inviteLink = "https://vabiss-okr.vercel.app/workspaces/" + workspaceId;
         emailService.sendInvitationEmail(user, workspace, inviteLink);
+    }
+
+    @Override
+    public Workspace acceptInvite(int workspaceId, int userId) {
+        Workspace workspace = workspaceRepository.getById(workspaceId);
+
+        User user = userRepository.getById(userId);
+        List<User> workspaceUsers = workspace.getUsers();
+        workspaceUsers.add(user);
+        workspace.setUsers(workspaceUsers);
+        return workspace;
     }
 
 }

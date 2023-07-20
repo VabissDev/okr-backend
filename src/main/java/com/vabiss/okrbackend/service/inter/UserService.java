@@ -30,5 +30,7 @@ public interface UserService {
 
     UserFormDto convertToUserFormDto(User user);
 
+//    User acceptInvite(int workspaceId, int userId);
+
     void deleteUser(int userId);
 }

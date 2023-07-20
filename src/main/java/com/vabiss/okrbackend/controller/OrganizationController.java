@@ -19,7 +19,6 @@ import java.util.List;
 public class OrganizationController {
 
     private final OrganizationService organizationService;
-    private final WorkspaceService workspaceService;
 
     @GetMapping("{organizationId}")
     public ResponseEntity<SuccessResponseDto> getOrganization(@PathVariable int organizationId) {
@@ -35,11 +34,8 @@ public class OrganizationController {
         return ResponseEntity.ok(SuccessResponseDto.of("Org updated", organizationDto1));
     }
 
-    @GetMapping("/workspace/{workspaceId}")
-    public void getAll(@PathVariable int workspaceId) {
-        workspaceService.findWorkspaceById(workspaceId);
-//        organizationService.
+
 
     }
 
-}
+
