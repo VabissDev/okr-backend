@@ -3,6 +3,7 @@ package com.vabiss.okrbackend.service;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.VerificationToken;
+import com.vabiss.okrbackend.entity.Workspace;
 import com.vabiss.okrbackend.exception.VerificationTokenExpiredException;
 import com.vabiss.okrbackend.repository.UserRepository;
 import com.vabiss.okrbackend.repository.VerificationTokenRepository;
@@ -91,6 +92,58 @@ public class EmailService {
                 "https://vabiss-okr.vercel.app/reset-passowrd?token=");
         sendEmail(mimeMessage);
         return "Reset password email sent!";
+    }
+
+    public void sendCreatedUserDetails(User user, String subject, String msg, String link) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        String htmlMsg = msg + link;
+        try {
+            helper.setText(htmlMsg, true);
+            helper.setTo(user.getUsername());
+            helper.setSubject(subject);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        sendEmail(mimeMessage);
+    }
+
+    public void sendAddedUser(User user, String subject, String msg, String link) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        String htmlMsg = msg + link;
+        try {
+            helper.setText(htmlMsg, true);
+            helper.setTo(user.getUsername());
+            helper.setSubject(subject);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        sendEmail(mimeMessage);
+    }
+
+    public void sendInvitationEmail(User user, Workspace workspace, String inviteLink) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+        String htmlMsg = "Hello " + user.getUsername() + ",<br>"
+                + "You have been invited to join the workspace " + workspace.getName() + ".<br>"
+                + "To accept the invitation, click on the link below:<br>"
+                + "<a href='" + inviteLink + "'>" + inviteLink + "</a>";
+
+        try {
+            helper.setText(htmlMsg, true);
+            helper.setTo(user.getUsername());
+            helper.setSubject("Invitation to join the workspace");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        sendEmail(mimeMessage);
     }
 
 }

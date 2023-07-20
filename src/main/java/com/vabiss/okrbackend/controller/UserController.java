@@ -1,6 +1,5 @@
 package com.vabiss.okrbackend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vabiss.okrbackend.dto.ResetPasswordDto;
 import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
@@ -13,17 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin")
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
-    private final ObjectMapper objectMapper;
-
 
     @GetMapping("/workspaces/{workspaceId}")
     public ResponseEntity<SuccessResponseDto> getUsersByWorkspaceId(@PathVariable int workspaceId) {
@@ -40,7 +36,7 @@ public class UserController {
     @PutMapping("/{userId}/fullname")
     public ResponseEntity<SuccessResponseDto> updateDisplayName(@PathVariable int userId,
                                                                 @RequestBody UserDto userDto) {
-        User user = userService.updateDisplayName(userId, userDto.getFullName());
+        User user = userService.updateFullName(userId, userDto.getFullName());
         UserDto userDto2 = userService.convertToUserDto(user);
         return ResponseEntity.ok(SuccessResponseDto.of("Display name updated!", userDto2));
     }
@@ -64,7 +60,6 @@ public class UserController {
         userService.addTeamMemberAndViewer(userId, workspaceId);
     }
 
-
     @PostMapping("/{organizationId}")
     public ResponseEntity<SuccessResponseDto> createUser(@PathVariable int organizationId,
                                                          @RequestBody UserFormDto userFormDto) {
@@ -78,6 +73,5 @@ public class UserController {
     public void removeUser(@PathVariable int userId) {
         userService.deleteUser(userId);
     }
-
 
 }

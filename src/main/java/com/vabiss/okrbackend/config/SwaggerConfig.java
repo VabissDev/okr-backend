@@ -18,6 +18,12 @@ import org.springframework.context.annotation.Configuration;
         type = SecuritySchemeType.HTTP,
         in = SecuritySchemeIn.HEADER
 )
+@SecurityScheme(
+        name = "basicAuth",
+        scheme = "basic",
+        type = SecuritySchemeType.HTTP,
+        in = SecuritySchemeIn.HEADER
+)
 public class SwaggerConfig {
 
     @Bean
@@ -36,7 +42,8 @@ public class SwaggerConfig {
 
         return new OpenAPI()
                 .info(info)
-                .addSecurityItem(new SecurityRequirement().addList("Authorization"));
+                .addSecurityItem(new SecurityRequirement().addList("Authorization"))
+                .addSecurityItem(new SecurityRequirement().addList("basicAuth"));
     }
 
 }

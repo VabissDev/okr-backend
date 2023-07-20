@@ -5,6 +5,7 @@ import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.service.inter.OrganizationService;
 import com.vabiss.okrbackend.service.inter.UserService;
+import com.vabiss.okrbackend.service.inter.WorkspaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OrganizationController {
 
     private final OrganizationService organizationService;
+    private final WorkspaceService workspaceService;
 
     @GetMapping("{organizationId}")
     public ResponseEntity<SuccessResponseDto> getOrganization(@PathVariable int organizationId) {
@@ -33,5 +35,11 @@ public class OrganizationController {
         return ResponseEntity.ok(SuccessResponseDto.of("Org updated", organizationDto1));
     }
 
+    @GetMapping("/workspace/{workspaceId}")
+    public void getAll(@PathVariable int workspaceId) {
+        workspaceService.findWorkspaceById(workspaceId);
+//        organizationService.
+
+    }
 
 }

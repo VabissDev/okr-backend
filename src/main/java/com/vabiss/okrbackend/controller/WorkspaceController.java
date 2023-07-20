@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(exposedHeaders = "Access-Control-Allow-Origin")
 @RestController
 @RequestMapping("/workspaces")
 public class WorkspaceController {
@@ -55,6 +55,13 @@ public class WorkspaceController {
                                                                    @RequestBody WorkspaceDto workspaceDto) {
         WorkspaceDto workspaceDto1 = workspaceService.updateWorkspaceOwner(workspaceId, workspaceDto.getOwner());
         return ResponseEntity.ok(SuccessResponseDto.of("Owner updated", workspaceDto1));
+    }
+
+
+    @PostMapping("/{workspaceId}/invite/{userId}")
+    public ResponseEntity<SuccessResponseDto> inviteUserToWorkspace(@PathVariable int workspaceId, @PathVariable int userId) {
+        workspaceService.inviteUserToWorkspace(workspaceId, userId);
+        return ResponseEntity.ok(SuccessResponseDto.of("User invited successfully"));
     }
 
 }
