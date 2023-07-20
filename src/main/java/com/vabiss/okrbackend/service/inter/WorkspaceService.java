@@ -21,4 +21,6 @@ public interface WorkspaceService {
 
     Workspace convertToWorkspace(WorkspaceDto workspaceDto);
 
+    void inviteUserToWorkspace(int workspaceId, int userId);
+
 }
