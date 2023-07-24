@@ -5,6 +5,7 @@ import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.UserDto;
 import com.vabiss.okrbackend.dto.UserFormDto;
 import com.vabiss.okrbackend.entity.User;
+import com.vabiss.okrbackend.entity.Workspace;
 import com.vabiss.okrbackend.service.inter.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

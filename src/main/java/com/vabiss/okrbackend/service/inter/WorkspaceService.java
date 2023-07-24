@@ -23,4 +23,6 @@ public interface WorkspaceService {
 
     void inviteUserToWorkspace(int workspaceId, int userId);
 
+    Workspace acceptInvite(int workspaceId, int userId);
+
 }

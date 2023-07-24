@@ -2,6 +2,9 @@ package com.vabiss.okrbackend.controller;
 
 import com.vabiss.okrbackend.dto.SuccessResponseDto;
 import com.vabiss.okrbackend.dto.WorkspaceDto;
+import com.vabiss.okrbackend.entity.User;
+import com.vabiss.okrbackend.entity.Workspace;
+import com.vabiss.okrbackend.service.inter.UserService;
 import com.vabiss.okrbackend.service.inter.WorkspaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -56,4 +59,10 @@ public class WorkspaceController {
         return ResponseEntity.ok(SuccessResponseDto.of("User invited successfully"));
     }
 
+    @PostMapping("/{workspaceId}/{userId}")
+    public ResponseEntity<Workspace> acceptInvite(@PathVariable int workspaceId, @PathVariable int userId) {
+        return ResponseEntity.ok(workspaceService.acceptInvite(workspaceId, userId));
+
+
+    }
 }

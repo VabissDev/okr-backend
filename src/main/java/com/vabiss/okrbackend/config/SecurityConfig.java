@@ -34,7 +34,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/workspaces/**").hasRole("USER") //+
 //                        .requestMatchers(HttpMethod.GET, "/organizations/**").hasRole("USER") //+
 //                        .requestMatchers("/organizations/**").hasRole("ADMIN") //+
-                        .anyRequest().permitAll()
+                                .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 //        httpSecurity.httpBasic(Customizer.withDefaults());
+
 
         return httpSecurity.build();
     }

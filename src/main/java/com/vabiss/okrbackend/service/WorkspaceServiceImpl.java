@@ -2,10 +2,8 @@ package com.vabiss.okrbackend.service;
 
 import com.vabiss.okrbackend.dto.WorkspaceDto;
 import com.vabiss.okrbackend.entity.Organization;
-import com.vabiss.okrbackend.entity.Role;
 import com.vabiss.okrbackend.entity.User;
 import com.vabiss.okrbackend.entity.Workspace;
-import com.vabiss.okrbackend.exception.CurrentStateResourceException;
 import com.vabiss.okrbackend.exception.ResourceNotFoundException;
 import com.vabiss.okrbackend.repository.OrganizationRepository;
 import com.vabiss.okrbackend.repository.UserRepository;
@@ -15,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -120,6 +115,17 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 
         String inviteLink = "https://vabiss-okr.vercel.app/workspaces/" + workspaceId;
         emailService.sendInvitationEmail(user, workspace, inviteLink);
+    }
+
+    @Override
+    public Workspace acceptInvite(int workspaceId, int userId) {
+        Workspace workspace = workspaceRepository.getById(workspaceId);
+
+        User user = userRepository.getById(userId);
+        List<User> workspaceUsers = workspace.getUsers();
+        workspaceUsers.add(user);
+        workspace.setUsers(workspaceUsers);
+        return workspace;
     }
 
 }
